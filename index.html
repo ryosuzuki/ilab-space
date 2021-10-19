@@ -7,14 +7,53 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
 
   <script>
+    AFRAME.registerComponent('clickable', {
+      init: function() {
+        this.el.addEventListener('click', (event) => {
+          console.log(event)
+          initVideo()
+        })
+      }
+    })
+
+    function initVideo() {
+      navigator.getUserMedia({ audio: false, video: { width: 300, height: 150 } },
+        function(stream) {
+          const video = document.querySelector('video')
+          video.srcObject = stream
+          video.onloadedmetadata = function(e) {
+            video.play()
+          }
+        },
+        function(err) {
+          console.log("The following error occcured: " + err.name)
+        }
+      )
+    }
+
   </script>
+
+  <style type="text/css">
+    #video {
+      position: fixed;
+      right: 0;
+      top: 0;
+      z-index: 1000;
+    }
+  </style>
+
 </head>
 
 <body>
-  <a-scene cursor="rayOrigin: mouse" cube-generate background="color: #FAFAFA">
-    <a-camera position="0 1.2 3" rotation="-60 0 0"></a-camera>
+  <video id="video"></video>
+
+  <a-scene cursor="rayOrigin: mouse" background="color: #FAFAFA">
+    <a-camera position="-10.455 1.2 1.144" rotation="-15.584 51.337 0"></a-camera>
     <a-plane clickable width="2" height="2" color="#aaa" position="0 0 0" rotation="-90 0 0"></a-plane>
     <a-entity obj-model="obj: url(obj-file/textured.obj); mtl: url(obj-file/textured.mtl)"></a-entity>
+
+    <a-box clickable id="mac" position="-13.150 -0.618 -0.318" rotation="0 90 0" scale="0.684 0.542 0.078" color="#4CC3D9"></a-box>
+
   </a-scene>
 </body>
 
