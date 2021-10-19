@@ -22,6 +22,10 @@
       console.log(id)
     })
 
+    peer.on('disconnected', () => {
+      console.log('disconnect')
+    })
+
     peer.on('call', (call) => {
       navigator.mediaDevices.getUserMedia({ video: true, audio: false })
       .then((stream) => {
@@ -41,6 +45,9 @@
   </script>
 
   <style type="text/css">
+    #video {
+      width: 100%;
+    }
   </style>
 
 </head>

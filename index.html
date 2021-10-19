@@ -33,11 +33,16 @@
         call.on('stream', (remoteStream) => {
           // Show stream in video elemtn
           console.log(remoteStream)
+          const video = document.getElementById('ilab-video')
+          video.srcObject = remoteStream
+          video.onloadedmetadata = (e) => {
+            video.play()
+          }
         }, (err) => {
           console.log('Failed to get local stream' + err)
         })
 
-        const video = document.querySelector('video')
+        const video = document.getElementById('video')
         video.srcObject = stream
         video.onloadedmetadata = (e) => {
           video.play()
@@ -52,17 +57,19 @@
   </script>
 
   <style type="text/css">
-    #video {
+    #ilab-video {
       position: fixed;
       right: 0;
       top: 0;
       z-index: 1000;
+      width: 200px;
     }
   </style>
 
 </head>
 
 <body>
+  <video id="ilab-video"></video>
   <a-scene cursor="rayOrigin: mouse" background="color: #FAFAFA">
     <a-assets>
       <video id="video"></video>
