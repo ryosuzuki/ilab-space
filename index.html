@@ -45,13 +45,16 @@
 </head>
 
 <body>
-  <video id="video"></video>
+  <a-assets>
+    <video id="video"></video>
+  </a-assets>
 
   <a-scene cursor="rayOrigin: mouse" background="color: #FAFAFA">
     <a-camera position="-10.455 1.2 1.144" rotation="-15.584 51.337 0"></a-camera>
     <a-plane clickable width="2" height="2" color="#aaa" position="0 0 0" rotation="-90 0 0"></a-plane>
     <a-entity obj-model="obj: url(obj-file/textured.obj); mtl: url(obj-file/textured.mtl)"></a-entity>
 
+    <a-video clickable id="mac-video" src="#video" width="16" height="9" position="-13.077 -0.587 -0.285" rotation="0 90 0" scale="-0.037 0.056 1"></a-video>
     <a-box clickable id="mac" position="-13.150 -0.618 -0.318" rotation="0 90 0" scale="0.684 0.542 0.078" color="#4CC3D9"></a-box>
 
   </a-scene>
