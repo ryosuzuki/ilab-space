@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>iLab Space</title>
+  <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+  <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+
+  <script>
+    let peerId = 'b8e0cc04-e488-4d48-8f7e-69d69ae000d8'
+    const peer = new Peer(peerId)
+    peer._id = peerId
+    const connect = peer.connect(peerId)
+    connect.on('open', function(id) {
+      connect.send('hi')
+      console.log(id)
+    })
+
+    peer.on('open', (id) => {
+      // peer._id = peerId
+      console.log(id)
+    })
+
+    peer.on('call', (call) => {
+      navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+      .then((stream) => {
+        call.answer(stream)
+        call.on('stream', (remoteStream) => {
+          const video = document.querySelector('video')
+          video.srcObject = remoteStream
+          video.onloadedmetadata = (e) => {
+            video.play()
+          }
+        })
+      })
+      .catch((err) => {
+        console.log("The following error occcured: " + err.name)
+      })
+    })
+  </script>
+
+  <style type="text/css">
+  </style>
+
+</head>
+
+<body>
+  <video id="video"></video>
+</body>
+
+</html>
